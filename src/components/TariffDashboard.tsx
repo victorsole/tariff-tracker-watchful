@@ -129,11 +129,6 @@ export const TariffDashboard = () => {
                 {data.sources && ` • Sources: ${data.sources.join(', ')}`}
               </p>
             )}
-            {error && (
-              <p className="text-sm text-red-200">
-                ⚠️ Live data unavailable - showing demo data: {error}
-              </p>
-            )}
           </div>
         </div>
       </div>
