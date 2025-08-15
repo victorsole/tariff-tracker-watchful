@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const chartData = [
   { month: 'Jan', us: 12.5, china: 8.3, eu: 4.2, mexico: 6.1 },
@@ -41,6 +41,12 @@ export const TariffChart = () => {
               boxShadow: '0 4px 12px -2px rgba(0, 0, 0, 0.08)'
             }}
             formatter={(value: any) => [`${value}%`, '']}
+          />
+          <Legend 
+            wrapperStyle={{
+              paddingTop: '20px'
+            }}
+            iconType="line"
           />
           <Line 
             type="monotone" 
