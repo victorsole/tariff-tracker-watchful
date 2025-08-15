@@ -131,7 +131,7 @@ export const TariffDashboard = () => {
             )}
             {error && (
               <p className="text-sm text-red-200">
-                ⚠️ Using fallback data: {error}
+                ⚠️ Live data unavailable - showing demo data: {error}
               </p>
             )}
           </div>
