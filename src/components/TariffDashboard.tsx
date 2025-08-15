@@ -4,7 +4,7 @@ import { TrendingUp, TrendingDown, AlertTriangle, BarChart3 } from "lucide-react
 import { TariffChart } from "./TariffChart";
 import { CountryTariffCard } from "./CountryTariffCard";
 import { NewsCard } from "./NewsCard";
-import beresolLogo from "@/assets/beresol-logo.png";
+// Using uploaded higher quality logo directly
 
 const euUsaTariffData = [
   { id: 1, country: "European Union", product: "Steel & Aluminum", rate: "25%", change: "+10%", trend: "up" as const },
@@ -78,7 +78,7 @@ export const TariffDashboard = () => {
       <div className="bg-gradient-hero text-primary-foreground py-8">
         <div className="container mx-auto px-4">
           <div className="flex items-center gap-4 mb-4">
-            <img src={beresolLogo} alt="Beresol" className="h-12 w-12 rounded-lg bg-white p-1" />
+            <img src="/lovable-uploads/ea31a562-e304-4379-aabb-9ff77987b686.png" alt="Beresol" className="h-12 w-12 rounded-lg bg-white p-1" />
             <div className="flex items-center gap-3">
               <BarChart3 className="h-8 w-8" />
               <h1 className="text-3xl font-bold">Tariff Monitor</h1>
