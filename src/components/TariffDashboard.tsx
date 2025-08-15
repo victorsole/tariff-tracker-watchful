@@ -1,9 +1,11 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { TrendingUp, TrendingDown, AlertTriangle, BarChart3 } from "lucide-react";
+import { TrendingUp, TrendingDown, AlertTriangle, BarChart3, RefreshCw, Globe, DollarSign } from "lucide-react";
 import { TariffChart } from "./TariffChart";
 import { CountryTariffCard } from "./CountryTariffCard";
 import { NewsCard } from "./NewsCard";
+import { useTariffData } from "@/hooks/useTariffData";
+import { Button } from "@/components/ui/button";
 // Using uploaded higher quality logo directly
 
 const euUsaTariffData = [
@@ -72,19 +74,67 @@ const tradeAlerts = [
 ];
 
 export const TariffDashboard = () => {
+  const { data, loading, error, refetch } = useTariffData();
+
+  const euUsaData = data?.tariffData.filter(item => 
+    item.country === "European Union" || item.country === "United States"
+  ) || euUsaTariffData;
+
+  const otherCountriesData = data?.tariffData.filter(item => 
+    item.country !== "European Union" && item.country !== "United States"
+  ) || otherCountriesTariffData;
+
+  const activeTariffs = data?.tariffData.length || 1247;
+  const averageRate = data?.tariffData.reduce((sum, item) => 
+    sum + parseFloat(item.rate.replace('%', '')), 0
+  ) / Math.max(activeTariffs, 1) || 18.4;
+  const countriesAffected = new Set(data?.tariffData.map(item => item.country)).size || 47;
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="bg-gradient-hero text-primary-foreground py-8">
         <div className="container mx-auto px-4">
-          <div className="flex items-center gap-4 mb-4">
-            <img src="/lovable-uploads/ea31a562-e304-4379-aabb-9ff77987b686.png" alt="Beresol" className="h-12 w-12 rounded-lg bg-white p-1" />
-            <div className="flex items-center gap-3">
-              <BarChart3 className="h-8 w-8" />
-              <h1 className="text-3xl font-bold">Tariff Monitor</h1>
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-4">
+              <img src="/lovable-uploads/ea31a562-e304-4379-aabb-9ff77987b686.png" alt="Beresol" className="h-12 w-12 rounded-lg bg-white p-1" />
+              <div className="flex items-center gap-3">
+                <BarChart3 className="h-8 w-8" />
+                <h1 className="text-3xl font-bold">Tariff Monitor</h1>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => refetch()}
+                disabled={loading}
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20"
+              >
+                <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+                Refresh Data
+              </Button>
+              {data?.status && (
+                <Badge variant={data.status === 'success' ? 'default' : 'secondary'}>
+                  {data.status === 'success' ? 'Live Data' : 'Fallback Data'}
+                </Badge>
+              )}
             </div>
           </div>
-          <p className="text-primary-foreground/80">Real-time trade war tariff tracking and analysis powered by Beresol</p>
+          <div className="flex flex-col gap-2">
+            <p className="text-primary-foreground/80">Real-time trade war tariff tracking and analysis powered by Beresol</p>
+            {data?.lastUpdated && (
+              <p className="text-sm opacity-75">
+                Last updated: {new Date(data.lastUpdated).toLocaleString()}
+                {data.sources && ` • Sources: ${data.sources.join(', ')}`}
+              </p>
+            )}
+            {error && (
+              <p className="text-sm text-red-200">
+                ⚠️ Using fallback data: {error}
+              </p>
+            )}
+          </div>
         </div>
       </div>
 
@@ -97,9 +147,9 @@ export const TariffDashboard = () => {
               <AlertTriangle className="h-4 w-4 text-chart-tertiary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">1,247</div>
+              <div className="text-2xl font-bold">{loading ? '...' : activeTariffs.toLocaleString()}</div>
               <p className="text-xs text-muted-foreground">
-                +23 from last week
+                Real-time tracking
               </p>
             </CardContent>
           </Card>
@@ -110,9 +160,9 @@ export const TariffDashboard = () => {
               <TrendingUp className="h-4 w-4 text-chart-quaternary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">18.4%</div>
+              <div className="text-2xl font-bold">{loading ? '...' : `${averageRate.toFixed(1)}%`}</div>
               <p className="text-xs text-muted-foreground">
-                +2.1% from last month
+                Across all monitored tariffs
               </p>
             </CardContent>
           </Card>
@@ -120,25 +170,25 @@ export const TariffDashboard = () => {
           <Card className="bg-gradient-card shadow-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Countries Affected</CardTitle>
-              <TrendingDown className="h-4 w-4 text-chart-secondary" />
+              <Globe className="h-4 w-4 text-chart-secondary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">47</div>
+              <div className="text-2xl font-bold">{loading ? '...' : countriesAffected}</div>
               <p className="text-xs text-muted-foreground">
-                -3 from last quarter
+                Currently tracked
               </p>
             </CardContent>
           </Card>
 
           <Card className="bg-gradient-card shadow-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Trade Impact</CardTitle>
-              <BarChart3 className="h-4 w-4 text-chart-primary" />
+              <CardTitle className="text-sm font-medium">Data Sources</CardTitle>
+              <DollarSign className="h-4 w-4 text-chart-primary" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">€230B</div>
+              <div className="text-2xl font-bold">{loading ? '...' : data?.sources.length || 'Multiple'}</div>
               <p className="text-xs text-muted-foreground">
-                Estimated annual impact
+                Official trade databases
               </p>
             </CardContent>
           </Card>
@@ -152,35 +202,56 @@ export const TariffDashboard = () => {
               <CardHeader>
                 <CardTitle>Tariff Trends</CardTitle>
                 <CardDescription>
-                  This chart displays the evolution of average tariff rates (%) imposed by major economies over the past 12 months. Each line represents a different country/region's tariff policy changes, showing how trade tensions have escalated or de-escalated over time.
+                  Real-time data from official sources: WTO, European Commission, and USTR. Each line represents tariff rate changes over the past 12 months.
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <TariffChart />
+                {loading ? (
+                  <div className="h-[300px] flex items-center justify-center">
+                    <RefreshCw className="h-8 w-8 animate-spin text-muted-foreground" />
+                  </div>
+                ) : (
+                  <TariffChart data={data?.chartData} />
+                )}
               </CardContent>
             </Card>
 
             {/* Country Tariff Cards */}
             <div className="mt-6 space-y-8">
               {/* EU and USA Section */}
-              <div>
-                <h3 className="text-lg font-semibold mb-4">EU & USA Trade Relations</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {euUsaTariffData.map((tariff) => (
-                    <CountryTariffCard key={tariff.id} tariff={tariff} />
-                  ))}
+              {euUsaData.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">EU & USA Trade Relations</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {euUsaData.map((tariff, index) => (
+                      <CountryTariffCard key={tariff.id || index} tariff={tariff} />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Other Major Economies Section */}
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Other Major Economies</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {otherCountriesTariffData.map((tariff) => (
-                    <CountryTariffCard key={tariff.id} tariff={tariff} />
-                  ))}
+              {otherCountriesData.length > 0 && (
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">Other Major Economies</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {otherCountriesData.map((tariff, index) => (
+                      <CountryTariffCard key={tariff.id || index} tariff={tariff} />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {loading && (
+                <Card className="bg-gradient-card shadow-card">
+                  <CardContent className="py-12">
+                    <div className="flex items-center justify-center space-x-2">
+                      <RefreshCw className="h-6 w-6 animate-spin" />
+                      <span>Loading real-time tariff data from official sources...</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </div>
 

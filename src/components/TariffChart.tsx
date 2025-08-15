@@ -1,21 +1,35 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const chartData = [
-  { month: 'Jan', us: 12.5, china: 8.3, eu: 4.2, mexico: 6.1 },
-  { month: 'Feb', us: 13.2, china: 9.1, eu: 4.5, mexico: 6.3 },
-  { month: 'Mar', us: 15.8, china: 12.4, eu: 5.1, mexico: 7.2 },
-  { month: 'Apr', us: 18.3, china: 15.7, eu: 5.8, mexico: 8.1 },
-  { month: 'May', us: 21.2, china: 18.9, eu: 6.2, mexico: 8.9 },
-  { month: 'Jun', us: 23.1, china: 22.3, eu: 7.1, mexico: 9.5 },
-  { month: 'Jul', us: 24.8, china: 25.1, eu: 7.8, mexico: 10.2 },
-  { month: 'Aug', us: 25.5, china: 26.8, eu: 8.3, mexico: 10.8 },
-  { month: 'Sep', us: 26.2, china: 28.1, eu: 8.9, mexico: 11.3 },
-  { month: 'Oct', us: 25.8, china: 27.5, eu: 9.2, mexico: 11.1 },
-  { month: 'Nov', us: 24.9, china: 26.8, eu: 9.0, mexico: 10.9 },
-  { month: 'Dec', us: 24.2, china: 25.9, eu: 8.7, mexico: 10.5 },
-];
+interface ChartData {
+  month: string;
+  us: number;
+  china: number;
+  eu: number;
+  mexico: number;
+}
 
-export const TariffChart = () => {
+interface TariffChartProps {
+  data?: ChartData[];
+}
+
+export const TariffChart = ({ data }: TariffChartProps) => {
+  // Fallback data if no data provided
+  const fallbackData = [
+    { month: 'Jan', us: 12.5, china: 8.3, eu: 4.2, mexico: 6.1 },
+    { month: 'Feb', us: 13.2, china: 9.1, eu: 4.5, mexico: 6.3 },
+    { month: 'Mar', us: 15.8, china: 12.4, eu: 5.1, mexico: 7.2 },
+    { month: 'Apr', us: 18.3, china: 15.7, eu: 5.8, mexico: 8.1 },
+    { month: 'May', us: 21.2, china: 18.9, eu: 6.2, mexico: 8.9 },
+    { month: 'Jun', us: 23.1, china: 22.3, eu: 7.1, mexico: 9.5 },
+    { month: 'Jul', us: 24.8, china: 25.1, eu: 7.8, mexico: 10.2 },
+    { month: 'Aug', us: 25.5, china: 26.8, eu: 8.3, mexico: 10.8 },
+    { month: 'Sep', us: 26.2, china: 28.1, eu: 8.9, mexico: 11.3 },
+    { month: 'Oct', us: 25.8, china: 27.5, eu: 9.2, mexico: 11.1 },
+    { month: 'Nov', us: 24.9, china: 26.8, eu: 9.0, mexico: 10.9 },
+    { month: 'Dec', us: 24.2, china: 25.9, eu: 8.7, mexico: 10.5 },
+  ];
+
+  const chartData = data || fallbackData;
   return (
     <div className="h-[300px] w-full">
       <ResponsiveContainer width="100%" height="100%">
