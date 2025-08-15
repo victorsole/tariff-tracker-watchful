@@ -17,7 +17,7 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 215 25% 15%;
 
-    --primary: 215 70% 25%;
+    --primary: 142 70% 25%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96%;
@@ -40,7 +40,7 @@ All colors MUST be HSL.
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 215 70% 25%;
+    --ring: 142 70% 25%;
 
     --radius: 0.5rem;
 
@@ -54,14 +54,14 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
 
     /* Financial dashboard specific tokens */
-    --chart-primary: 215 70% 45%;
-    --chart-secondary: 142 76% 36%;
+    --chart-primary: 142 70% 45%;
+    --chart-secondary: 215 70% 45%;
     --chart-tertiary: 43 96% 56%;
     --chart-quaternary: 0 84% 60%;
     
-    --gradient-primary: linear-gradient(135deg, hsl(215 70% 25%), hsl(215 70% 35%));
+    --gradient-primary: linear-gradient(135deg, hsl(142 70% 25%), hsl(142 70% 35%));
     --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(210 40% 98%));
-    --gradient-hero: linear-gradient(135deg, hsl(215 70% 25%), hsl(215 70% 40%));
+    --gradient-hero: linear-gradient(135deg, hsl(142 70% 25%), hsl(142 50% 35%));
     
     --shadow-card: 0 4px 12px -2px hsl(215 25% 15% / 0.08);
     --shadow-elevated: 0 8px 32px -4px hsl(215 25% 15% / 0.12);
@@ -77,7 +77,7 @@ All colors MUST be HSL.
     --popover: 215 25% 12%;
     --popover-foreground: 210 40% 95%;
 
-    --primary: 215 70% 55%;
+    --primary: 142 70% 55%;
     --primary-foreground: 215 28% 8%;
 
     --secondary: 215 25% 15%;
@@ -100,7 +100,7 @@ All colors MUST be HSL.
 
     --border: 215 25% 18%;
     --input: 215 25% 18%;
-    --ring: 215 70% 55%;
+    --ring: 142 70% 55%;
 
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
@@ -112,14 +112,14 @@ All colors MUST be HSL.
     --sidebar-ring: 217.2 91.2% 59.8%;
 
     /* Dark mode financial dashboard tokens */
-    --chart-primary: 215 70% 55%;
-    --chart-secondary: 142 76% 46%;
+    --chart-primary: 142 70% 55%;
+    --chart-secondary: 215 70% 55%;
     --chart-tertiary: 43 96% 66%;
     --chart-quaternary: 0 84% 70%;
     
-    --gradient-primary: linear-gradient(135deg, hsl(215 70% 25%), hsl(215 70% 45%));
+    --gradient-primary: linear-gradient(135deg, hsl(142 70% 25%), hsl(142 70% 45%));
     --gradient-card: linear-gradient(145deg, hsl(215 25% 12%), hsl(215 25% 15%));
-    --gradient-hero: linear-gradient(135deg, hsl(215 70% 35%), hsl(215 70% 55%));
+    --gradient-hero: linear-gradient(135deg, hsl(142 70% 35%), hsl(142 70% 55%));
     
     --shadow-card: 0 4px 12px -2px hsl(0 0% 0% / 0.25);
     --shadow-elevated: 0 8px 32px -4px hsl(0 0% 0% / 0.35);

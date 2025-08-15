@@ -8,6 +8,7 @@ interface NewsItem {
   summary: string;
   time: string;
   source: string;
+  url: string;
 }
 
 interface NewsCardProps {
@@ -15,8 +16,15 @@ interface NewsCardProps {
 }
 
 export const NewsCard = ({ news }: NewsCardProps) => {
+  const handleClick = () => {
+    window.open(news.url, '_blank', 'noopener,noreferrer');
+  };
+
   return (
-    <Card className="bg-gradient-card shadow-card hover:shadow-elevated transition-all duration-200 cursor-pointer group">
+    <Card 
+      className="bg-gradient-card shadow-card hover:shadow-elevated transition-all duration-200 cursor-pointer group"
+      onClick={handleClick}
+    >
       <CardContent className="p-4">
         <div className="flex justify-between items-start mb-2">
           <h4 className="font-semibold text-sm leading-tight text-card-foreground group-hover:text-primary transition-colors">
@@ -30,7 +38,7 @@ export const NewsCard = ({ news }: NewsCardProps) => {
         </p>
         
         <div className="flex justify-between items-center">
-          <Badge variant="outline" className="text-xs">
+          <Badge variant="outline" className="text-xs hover:bg-primary hover:text-primary-foreground transition-colors">
             {news.source}
           </Badge>
           <div className="flex items-center gap-1 text-xs text-muted-foreground">
