@@ -193,7 +193,10 @@ function generateFallbackData(): TariffData[] {
 
 function generateChartData(): ChartData[] {
   // This would ideally come from historical data APIs
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const allMonths = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const currentMonth = new Date().getMonth(); // 0-based (0 = Jan, 8 = Sep)
+  const months = allMonths.slice(0, currentMonth + 1); // Show months up to current month
+  
   return months.map(month => ({
     month,
     us: Math.random() * 20 + 10,
