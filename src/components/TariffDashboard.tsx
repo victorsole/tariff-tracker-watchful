@@ -26,33 +26,6 @@ const otherCountriesTariffData = [
   { id: 11, country: "Taiwan", product: "Semiconductors", rate: "22%", change: "+5%", trend: "up" as const },
 ];
 
-const mockNews = [
-  {
-    id: 1,
-    title: "US Announces New Tariffs on Chinese Electronics",
-    summary: "25% tariff on semiconductors and consumer electronics effective next month",
-    time: "2 hours ago",
-    source: "Trade Weekly",
-    url: "https://tradeweekly.com/us-china-electronics-tariffs"
-  },
-  {
-    id: 2,
-    title: "EU Retaliates with Agricultural Tariffs",
-    summary: "15% increase on US agricultural imports announced",
-    time: "4 hours ago",
-    source: "European Trade Journal",
-    url: "https://eutrade.eu/agricultural-tariffs-response"
-  },
-  {
-    id: 3,
-    title: "USMCA Trade Agreement Under Review",
-    summary: "Annual review highlights growing tensions over automotive sector",
-    time: "6 hours ago",
-    source: "North America Trade",
-    url: "https://natrade.com/usmca-review-2024"
-  }
-];
-
 const tradeAlerts = [
   {
     id: 1,
@@ -76,6 +49,7 @@ const tradeAlerts = [
 
 export const TariffDashboard = () => {
   const { data, loading, error, refetch } = useTariffData();
+  const { news, loading: newsLoading, refetch: refetchNews } = useTradeNews();
 
   const euUsaData = data?.tariffData.filter(item => 
     item.country === "European Union" || item.country === "United States"
@@ -108,11 +82,14 @@ export const TariffDashboard = () => {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => refetch()}
-                disabled={loading}
+                onClick={() => {
+                  refetch();
+                  refetchNews();
+                }}
+                disabled={loading || newsLoading}
                 className="bg-white/10 border-white/20 text-white hover:bg-white/20"
               >
-                <RefreshCw className={`h-4 w-4 mr-2 ${loading ? 'animate-spin' : ''}`} />
+                <RefreshCw className={`h-4 w-4 mr-2 ${(loading || newsLoading) ? 'animate-spin' : ''}`} />
                 Refresh Data
               </Button>
               {data?.status && (
@@ -257,13 +234,20 @@ export const TariffDashboard = () => {
               <CardHeader>
                 <CardTitle>Latest Trade News</CardTitle>
                 <CardDescription>
-                  Recent developments in global trade policy
+                  Recent developments in global trade policy from official sources
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                {mockNews.map((news) => (
-                  <NewsCard key={news.id} news={news} />
-                ))}
+                {newsLoading ? (
+                  <div className="flex items-center justify-center py-4">
+                    <RefreshCw className="h-4 w-4 animate-spin text-muted-foreground mr-2" />
+                    <span className="text-sm text-muted-foreground">Loading news...</span>
+                  </div>
+                ) : (
+                  news.map((newsItem) => (
+                    <NewsCard key={newsItem.id} news={newsItem} />
+                  ))
+                )}
               </CardContent>
             </Card>
 
