@@ -251,12 +251,15 @@ export const TariffDashboard = () => {
               </CardContent>
             </Card>
 
-            {/* Alert Card */}
+            {/* EU Trade Alerts Card */}
             <Card className="bg-gradient-card shadow-card border-warning">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+                <CardTitle 
+                  className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
+                  onClick={() => window.open('https://policy.trade.ec.europa.eu/news_en', '_blank', 'noopener,noreferrer')}
+                >
                   <AlertTriangle className="h-5 w-5 text-warning" />
-                  Trade Alerts
+                  EU Trade Alerts
                   <Badge variant="outline" className="ml-auto text-xs">Live Updates</Badge>
                 </CardTitle>
               </CardHeader>
