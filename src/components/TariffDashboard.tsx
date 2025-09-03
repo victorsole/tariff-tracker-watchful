@@ -5,6 +5,7 @@ import { TariffChart } from "./TariffChart";
 import { CountryTariffCard } from "./CountryTariffCard";
 import { NewsCard } from "./NewsCard";
 import { useTariffData } from "@/hooks/useTariffData";
+import { useTradeNews } from "@/hooks/useTradeNews";
 import { Button } from "@/components/ui/button";
 // Using uploaded higher quality logo directly
 

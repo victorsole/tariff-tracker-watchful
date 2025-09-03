@@ -11,6 +11,15 @@ interface TariffData {
   lastUpdated: string;
 }
 
+interface NewsItem {
+  id: string;
+  title: string;
+  summary: string;
+  time: string;
+  source: string;
+  url: string;
+}
+
 interface ChartData {
   month: string;
   us: number;
@@ -24,8 +33,14 @@ interface TariffDataResponse {
   chartData: ChartData[];
   lastUpdated: string;
   sources: string[];
-  status: string;
-  error?: string;
+  status: 'success' | 'fallback';
+}
+
+interface NewsDataResponse {
+  news: NewsItem[];
+  lastUpdated: string;
+  sources: string[];
+  status: 'success' | 'fallback';
 }
 
 export const useTariffData = () => {

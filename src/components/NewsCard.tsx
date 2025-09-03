@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Clock, ExternalLink } from "lucide-react";
 
 interface NewsItem {
-  id: number;
+  id: string;
   title: string;
   summary: string;
   time: string;
